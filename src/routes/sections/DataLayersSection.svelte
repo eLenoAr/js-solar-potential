@@ -77,7 +77,7 @@
   let apiResponseDialog: MdDialog;
   let layerId: LayerId | 'none' = 'monthlyFlux';
   let layer: Layer | undefined;
-  let imageryQuality: 'HIGH' | 'MEDIUM' | 'LOW';
+  let imageryQuality: 'HIGH' | 'MEDIUM' | 'BASE';
 
   let playAnimation = true;
   let tick = 0;
@@ -250,9 +250,9 @@
           {:else if imageryQuality == 'MEDIUM'}
             <p><b>AI augmented aerial imagery</b> available.</p>
             <p>Imagery and DSM data were processed at <b>25 cm/pixel</b>.</p>
-          {:else if imageryQuality == 'LOW'}
-            <p><b>AI augmented aerial or satellite imagery</b> available.</p>
-            <p>Imagery and DSM data were processed at <b>50 cm/pixel</b>.</p>
+          {:else if imageryQuality == 'BASE'}
+            <p><b>AI augmented satellite imagery</b> available.</p>
+            <p>Imagery and DSM data were processed at <b>25 cm/pixel</b>.</p>
           {/if}
         </span>
 

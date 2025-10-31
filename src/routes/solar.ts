@@ -24,7 +24,7 @@ export interface DataLayersResponse {
   annualFluxUrl: string;
   monthlyFluxUrl: string;
   hourlyShadeUrls: string[];
-  imageryQuality: 'HIGH' | 'MEDIUM' | 'LOW';
+  imageryQuality: 'HIGH' | 'MEDIUM' | 'BASE';
 }
 
 export interface Bounds {
@@ -46,7 +46,7 @@ export interface BuildingInsightsResponse {
   statisticalArea: string;
   regionCode: string;
   solarPotential: SolarPotential;
-  imageryQuality: 'HIGH' | 'MEDIUM' | 'LOW';
+  imageryQuality: 'HIGH' | 'MEDIUM' | 'BASE';
 }
 
 export interface SolarPotential {
@@ -146,6 +146,8 @@ export async function findClosestBuilding(
   const args = {
     'location.latitude': location.lat().toFixed(5),
     'location.longitude': location.lng().toFixed(5),
+    // The Solar API always returns the highest quality imagery available.
+    required_quality: 'BASE',
   };
   console.log('GET buildingInsights\n', args);
   const params = new URLSearchParams({ ...args, key: apiKey });
@@ -185,10 +187,10 @@ export async function getDataLayerUrls(
     radius_meters: radiusMeters.toString(),
     // The Solar API always returns the highest quality imagery available.
     // By default the API asks for HIGH quality, which means that HIGH quality isn't available,
-    // but there is an existing MEDIUM or LOW quality, it won't return anything.
-    // Here we ask for *at least* LOW quality, but if there's a higher quality available,
+    // but there is an existing MEDIUM or BASE quality, it won't return anything.
+    // Here we ask for *at least* BASE quality, but if there's a higher quality available,
     // the Solar API will return us the highest quality available.
-    required_quality: 'LOW',
+    required_quality: 'BASE',
   };
   console.log('GET dataLayers\n', args);
   const params = new URLSearchParams({ ...args, key: apiKey });
